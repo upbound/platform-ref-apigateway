@@ -1,0 +1,11 @@
+apiVersion: apigateway.aws.upbound.io/v1beta1
+kind: RestAPI
+metadata:
+  labels:
+    upbound.io/apigateway: {{ .Values.name }}
+  name: {{ .Values.name }}
+spec:
+  forProvider:
+    description: This is my API for demonstration purposes
+    name: {{ .Values.name }}
+    region: {{ .Values.region }}

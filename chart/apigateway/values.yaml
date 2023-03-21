@@ -1,0 +1,27 @@
+name: upbound-api-gateway
+region: eu-central-1
+resources:
+  - path: example
+  - path: example/{id}
+    methods:
+      - httpMethod: GET
+        authorizationType: NONE
+        integration:
+          - type: HTTP_PROXY
+            integrationHttpMethod: POST
+            uri: https://example.com
+        integrationResponses:
+          - statusCode: "200"
+            responseParameters:
+              method.response.header.X-Some-Header: integration.response.header.X-Some-Other-Header
+            responseTemplates:
+              application/xml: |
+                #set($inputRoot = $input.path('$'))
+                <?xml version="1.0" encoding="UTF-8"?>
+                <message>
+                    $inputRoot.body
+                </message>
+        methodResponses:
+          - statusCode: "200"
+        requestParameters:
+          method.request.header.X-Some-Header: true

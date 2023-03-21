@@ -1,0 +1,31 @@
+apiVersion: apigateway.upbound.io/v1alpha1
+kind: APIGateway
+metadata:
+  name: upbound-apigateway
+spec:
+  parameters:
+    region: eu-west-1
+    resources:
+      - path: test
+      - path: test2
+      - path: test3
+        methods:
+          - httpMethod: GET
+            authorizationType: NONE
+            integration:
+              - type: HTTP
+                integrationHttpMethod: POST
+                uri: https://example.com
+            integrationResponses:
+              - statusCode: "200"
+                responseTemplates:
+                  application/xml: |
+                    #set($inputRoot = $input.path('$'))
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <message>
+                        $inputRoot.body
+                    </message>
+            methodResponses:
+              - statusCode: "200"
+            requestParameters:
+              method.request.header.X-Some-Header: true

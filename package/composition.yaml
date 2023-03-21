@@ -1,0 +1,69 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xapigateways.apigateway.upbound.io
+spec:
+  compositeTypeRef:
+    apiVersion: apigateway.upbound.io/v1alpha1
+    kind: XAPIGateway
+  resources:
+    - name: APIGateway
+      base:
+        apiVersion: helm.crossplane.io/v1beta1
+        kind: Release
+        spec:
+          wait: true
+          providerConfigRef:
+            name: in-cluster
+          rollbackLimit: 0
+          forProvider:
+            skipCreateNamespace: true
+            chart:
+              url: https://raw.githubusercontent.com/ytsarev/helm-charts/main/apigateway-0.12.0.tgz
+          connectionDetails:
+            - apiVersion: apigateway.aws.upbound.io/v1beta1
+              kind: RestAPI
+              fieldPath: status.atProvider.arn
+              toConnectionSecretKey: restapi-arn
+          writeConnectionSecretToRef:
+            name: apigateway
+      patches:
+        - fromFieldPath: metadata.name
+          toFieldPath: spec.forProvider.values.name
+        - fromFieldPath: spec.claimRef.namespace
+          toFieldPath: spec.forProvider.namespace
+        - fromFieldPath: metadata.name
+          toFieldPath: spec.connectionDetails[0].name
+        - fromFieldPath: spec.claimRef.namespace
+          toFieldPath: spec.writeConnectionSecretToRef.namespace
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.values.region
+        - fromFieldPath: spec.parameters.resources
+          toFieldPath: spec.forProvider.values.resources
+    - name: secret2status
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          # Use management policy Observe to observe k8s resource,
+          # but leave to third party to create, update, or delete the resource
+          managementPolicy: Observe
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Secret
+              metadata:
+                # name in manifest is optional and defaults to Object name
+                name: apigateway
+                namespace: default
+      patches:
+        - fromFieldPath: spec.claimRef.namespace
+          toFieldPath: spec.forProvider.namespace
+        - type: ToCompositeFieldPath
+          fromFieldPath: status.atProvider.manifest.data.restapi-arn
+          toFieldPath: status.agw.restapi-arn
+          transforms:
+            - type: string
+              string:
+                type: Convert
+                convert: FromBase64

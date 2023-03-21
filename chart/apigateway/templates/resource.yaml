@@ -1,0 +1,121 @@
+{{- range $resourceIndex, $path := .Values.resources }}
+---
+apiVersion: apigateway.aws.upbound.io/v1beta1
+kind: Resource
+metadata:
+  labels:
+    upbound.io/apigateway: {{ $.Values.name }}-{{ $resourceIndex }}
+  name: {{ $.Values.name }}-{{ $resourceIndex }}
+spec:
+  forProvider:
+    parentIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}
+    pathPart: {{ .path }}
+    region: {{ $.Values.region }}
+    restApiIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}
+{{- range $methodIndex, $method := .methods }}
+---
+apiVersion: apigateway.aws.upbound.io/v1beta1
+kind: Method
+metadata:
+  labels:
+    upbound.io/apigateway: {{ $.Values.name }}-{{ $methodIndex }}
+  name: {{ $.Values.name }}-{{ $methodIndex }}
+spec:
+  forProvider:
+    authorization: {{ .authorizationType }}
+    httpMethod: {{ .httpMethod }}
+    region: {{ $.Values.region }}
+    resourceIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $resourceIndex }}
+    restApiIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}
+    requestParameters:
+{{- range $requestParameterKey, $requestParameter := .requestParameters }}
+{{ $requestParameterKey | indent 6 }}: {{ $requestParameter }}
+{{- end }}
+{{- range $integrationIndex, $integration := .integration }}
+---
+apiVersion: apigateway.aws.upbound.io/v1beta1
+kind: Integration
+metadata:
+  labels:
+    upbound.io/apigateway: {{ $.Values.name }}-{{ $integrationIndex }}
+  name: {{ $.Values.name }}-{{ $integrationIndex }}
+spec:
+  forProvider:
+    httpMethodSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $methodIndex }}
+    region: {{ $.Values.region }}
+    resourceIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $resourceIndex }}
+    restApiIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}
+    type: {{ .type }}
+    integrationHttpMethod: {{ .integrationHttpMethod }}
+    uri: {{ .uri }}
+{{- end }}
+{{- range $integrationResponseIndex, $integrationResponse := .integrationResponses }}
+---
+apiVersion: apigateway.aws.upbound.io/v1beta1
+kind: IntegrationResponse
+metadata:
+  labels:
+    upbound.io/apigateway: {{ $.Values.name }}-{{ $integrationResponseIndex }}
+  name: {{ $.Values.name }}-{{ $integrationResponseIndex }}
+spec:
+  forProvider:
+    httpMethodSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $methodIndex }}
+    region: {{ $.Values.region }}
+    resourceIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $resourceIndex }}
+    restApiIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}
+    statusCode: "200"
+    responseParameters:
+{{- range $responseParameterKey, $responseParameter := .responseParameters }}
+{{ $responseParameterKey | indent 6 }}: {{ $responseParameter }}
+{{- end }}
+    responseTemplates:
+{{- range $responseTemplateKey, $responseTemplate := .responseTemplates }}
+{{ $responseTemplateKey | indent 6 }}: {{- toYaml $responseTemplate | indent 8 -}}
+{{- end }}
+
+
+{{- end }}
+{{- range $methodResponseIndex, $methodResponse := .methodResponses }}
+---
+apiVersion: apigateway.aws.upbound.io/v1beta1
+kind: MethodResponse
+metadata:
+  labels:
+    upbound.io/apigateway: {{ $.Values.name }}-{{ $methodResponseIndex }}
+  name: {{ $.Values.name }}-{{ $methodResponseIndex }}
+spec:
+  forProvider:
+    httpMethodSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $methodIndex }}
+    region: {{ $.Values.region }}
+    resourceIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}-{{ $resourceIndex }}
+    restApiIdSelector:
+      matchLabels:
+        upbound.io/apigateway: {{ $.Values.name }}
+    statusCode: "200"
+{{- end }}
+{{- end }}
+{{- end }}

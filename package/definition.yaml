@@ -1,0 +1,96 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xapigateways.apigateway.upbound.io
+spec:
+  claimNames:
+    kind: APIGateway
+    plural: apigateways
+  group: apigateway.upbound.io
+  names:
+    kind: XAPIGateway
+    plural: xapigateways
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  region:
+                    type: string
+                    description: AWS region
+                  resources:
+                    type: array
+                    description: array of resources
+                    items:
+                      type: object
+                      properties:
+                        path:
+                          type: string
+                        methods:
+                          type: array
+                          description: array of methods
+                          items:
+                            type: object
+                            properties:
+                              httpMethod:
+                                type: string
+                              authorizationType:
+                                type: string
+                              integration:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                    integrationHttpMethod:
+                                      type: string
+                                    uri:
+                                      type: string
+                              integrationResponses:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    statusCode:
+                                      type: string
+                                    responseParameters:
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    responseTemplates:
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                              methodResponses:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    statusCode:
+                                      type: string
+                              requestParameters:
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
+                            required:
+                              - httpMethod
+                              - authorizationType
+                required:
+                  - region
+            required:
+              - parameters
+          status:
+            description: A Status represents the observed state
+            properties:
+              agw:
+                description: Freeform field containing status information for APIGateway
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
+            type: object
