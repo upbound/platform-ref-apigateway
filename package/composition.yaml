@@ -10,7 +10,7 @@ spec:
     - name: APIGateway
       base:
         apiVersion: helm.crossplane.io/v1beta1
-        kind: Release
+        kind: Release #test uptest
         spec:
           wait: true
           providerConfigRef:
