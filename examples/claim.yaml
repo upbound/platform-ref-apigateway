@@ -2,6 +2,7 @@ apiVersion: apigateway.upbound.io/v1alpha1
 kind: APIGateway
 metadata:
   name: upbound-apigateway
+  namespace: default
 spec:
   parameters:
     region: eu-west-1
