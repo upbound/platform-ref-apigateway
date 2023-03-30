@@ -3,18 +3,18 @@
 Reference architecture for dynamic API Gateway composition using the abstracted helm approach
 
 
-## Main points:
+## Main points
 
 * Use helm as underlying templating mechanism - unlocking loops and conditionals
 * Put helm invocation behind the k8s API server with provider-helm
 * Abstract it away with XRD and Composition driving provider-helm Release resource
 
-## Benefits:
+## Benefits
 * Benefit from local test run with `helm template .` and catch errors early with
   faster feedback loop
 * Functions without Functions - stable Crossplane functionality
 
-## Quirks:
+## Implementation specifics
 * Additional helm packaging layer is required but it is a commodity - differente
   environments can adopt different ways to store charts. Lot of prominent services
   can be used for that: from GitHub to ECR, or anything OCI compatible.
