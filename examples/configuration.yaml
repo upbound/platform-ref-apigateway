@@ -3,4 +3,4 @@ kind: Configuration
 metadata:
   name: platform-ref-apigateway
 spec:
-  package: xpkg.upbound.io/upbound/platform-ref-apigateway:v0.1.0
+  package: xpkg.upbound.io/upbound/platform-ref-apigateway:v0.1.1
