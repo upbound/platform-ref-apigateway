@@ -1,5 +1,5 @@
 apiVersion: v2
-name: platform-ref-apigateway
+name: platform-ref-apigateway-chart
 description: Abstracted helm implementation for APIGateway
 
 # A chart can be either an 'application' or a 'library' chart.

@@ -21,7 +21,7 @@ UPTEST_VERSION = v0.2.1
 USE_HELM3 = true
 HELM3_VERSION = v3.11.2
 HELM_OCI_URL = xpkg.upbound.io/upbound
-HELM_CHARTS = $(PROJECT_NAME)
+HELM_CHARTS = $(PROJECT_NAME)-chart
 HELM_CHART_LINT_ARGS_$(PROJECT_NAME) = --set nameOverride='',imagePullSecrets=''
 HELM_CHARTS_DIR ?= $(ROOT_DIR)/chart
 
