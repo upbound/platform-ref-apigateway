@@ -21,7 +21,7 @@ spec:
             chart:
               name: platform-ref-apigateway-chart
               repository: oci://xpkg.upbound.io/upbound
-              version: 0.0.0-9.g6e78984
+              version: 0.1.0
           connectionDetails:
             - apiVersion: apigateway.aws.upbound.io/v1beta1
               kind: RestAPI
