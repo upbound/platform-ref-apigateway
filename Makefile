@@ -15,7 +15,18 @@ UP_VERSION = v0.13.0
 UP_CHANNEL = stable
 UPTEST_VERSION = v0.2.1
 
+# ====================================================================================
+# Setup Helm
+
+USE_HELM3 = true
+HELM3_VERSION = v3.11.2
+HELM_OCI_URL = xpkg.upbound.io/upbound
+HELM_CHARTS = $(PROJECT_NAME)
+HELM_CHART_LINT_ARGS_$(PROJECT_NAME) = --set nameOverride='',imagePullSecrets=''
+HELM_CHARTS_DIR ?= $(ROOT_DIR)/chart
+
 -include build/makelib/k8s_tools.mk
+-include makelib/helmoci.mk
 # ====================================================================================
 # Setup XPKG
 XPKG_REG_ORGS ?= xpkg.upbound.io/upbound
@@ -67,3 +78,4 @@ uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 e2e: build controlplane.up local.xpkg.deploy.configuration.$(PROJECT_NAME) uptest
 
 .PHONY: uptest e2e
+
