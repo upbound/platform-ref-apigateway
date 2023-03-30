@@ -2,6 +2,7 @@
 
 Reference architecture for dynamic API Gateway composition using the abstracted helm approach
 
+
 ## Main points:
 
 * Use helm as underlying templating mechanism - unlocking loops and conditionals
@@ -17,6 +18,15 @@ Reference architecture for dynamic API Gateway composition using the abstracted 
 * Additional helm packaging layer is required but it is a commodity - differente
   environments can adopt different ways to store charts. Lot of prominent services
   can be used for that: from GitHub to ECR, or anything OCI compatible.
+
+## What about Composition Functions?
+
+Abstracted helm approach is experimental design that uses stable Crossplane
+functionality with combination of CNCF ecosystem tooling.  We reuse helm templating
+for dynamic parts of the managed resource composition. The future implementation
+of this dynamic functionality with templating capabilities is targeted to be
+based on [Composition Functions](https://docs.crossplane.io/knowledge-base/guides/composition-functions/)
+right after they mature to v1beta1.
 
 
 ## End-to-end example

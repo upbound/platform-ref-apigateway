@@ -1,0 +1,6 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: platform-ref-apigateway
+spec:
+  package: xpkg.upbound.io/upbound/platform-ref-apigateway:v0.1.0

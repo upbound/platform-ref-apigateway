@@ -7,21 +7,21 @@ metadata:
     meta.crossplane.io/source: github.com/upbound/platform-ref-apigateway
     meta.crossplane.io/license: Apache-2.0
     meta.crossplane.io/description: |
-      This reference platform Configuration for Kubernetes and Data Services
-      is a starting point to build, run, and operate your own internal cloud
-      platform and offer a self-service console and API to your internal teams.
+      This reference platform Configuration for AWS APIGateway
+      is a starting point to build, run, and operate your APIGateway dynamic
+      abstraction and offer a self-service capability to your internal teams.
 
     meta.crossplane.io/readme: |
-      This reference platform `Configuration` for Kubernetes and Data Services
-      is a starting point to build, run, and operate your own internal cloud
-      platform and offer a self-service console and API to your internal teams.
-      It provides platform APIs to provision fully configured EKS clusters,
-      with secure networking, and stateful cloud services (RDS) designed to
-      securely connect to the nodes in each EKS cluster -- all composed using
-      cloud service primitives from the [Upbound Official AWS
-      Provider](https://marketplace.upbound.io/providers/upbound/provider-aws). App
-      deployments can securely connect to the infrastructure they need using
-      secrets distributed directly to the app namespace.
+      This reference platform Configuration for AWS APIGateway
+      is a starting point to build, run, and operate your APIGateway dynamic
+      abstraction and offer a self-service capability to your internal teams.
+      It uses experimental(!) abstracted helm approach to reuse helm templating
+      for dynamic parts of the managed resource composition. The future implementation
+      of this dynamic functionality with templating capabilities is targeted to be
+      based on [Composition Functions](https://docs.crossplane.io/knowledge-base/guides/composition-functions/)
+      right after they mature to v1beta1.
+      This Configuration uses cloud APIGateway service primitives from the [Upbound Official AWS
+      Provider](https://marketplace.upbound.io/providers/upbound/provider-aws).
 
       To learn more checkout the [GitHub
       repo](https://github.com/upbound/platform-ref-apigateway/) that you can copy and
