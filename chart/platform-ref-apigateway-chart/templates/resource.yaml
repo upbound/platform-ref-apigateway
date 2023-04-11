@@ -62,6 +62,10 @@ spec:
     type: {{ .type }}
     integrationHttpMethod: {{ .integrationHttpMethod }}
     uri: {{ .uri }}
+    requestTemplates:
+{{- range $requestTemplateKey, $requestTemplate := .requestTemplates }}
+{{ $requestTemplateKey | indent 6 }}: {{ $requestTemplate }}
+{{- end }}
 {{- end }}
 {{- range $integrationResponseIndex, $integrationResponse := .integrationResponses }}
 ---

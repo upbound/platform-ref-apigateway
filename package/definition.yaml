@@ -59,6 +59,9 @@ spec:
                                       type: string
                                     uri:
                                       type: string
+                                    requestTemplates:
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
                               integrationResponses:
                                 type: array
                                 items:
