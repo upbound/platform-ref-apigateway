@@ -31,5 +31,8 @@ spec:
                     </message>
             methodResponses:
               - statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers: true
+                  method.response.header.Access-Control-Allow-Origin: true
             requestParameters:
               method.request.header.X-Some-Header: true

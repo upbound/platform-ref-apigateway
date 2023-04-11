@@ -83,7 +83,7 @@ spec:
     restApiIdSelector:
       matchLabels:
         upbound.io/apigateway: {{ $.Values.name }}
-    statusCode: "200"
+    statusCode: {{ .statusCode }}
     responseParameters:
 {{- range $responseParameterKey, $responseParameter := .responseParameters }}
 {{ $responseParameterKey | indent 6 }}: {{ $responseParameter }}
@@ -115,7 +115,11 @@ spec:
     restApiIdSelector:
       matchLabels:
         upbound.io/apigateway: {{ $.Values.name }}
-    statusCode: "200"
+    statusCode: {{ .statusCode }}
+    responseParameters:
+{{- range $responseParameterKey, $responseParameter := .responseParameters }}
+{{ $responseParameterKey | indent 6 }}: {{ $responseParameter }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
