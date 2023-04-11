@@ -6,6 +6,9 @@ metadata:
 spec:
   parameters:
     region: eu-west-1
+    tags:
+      env: test
+      owner: dev
     resources:
       - path: test
       - path: test2
@@ -17,6 +20,8 @@ spec:
               - type: HTTP
                 integrationHttpMethod: POST
                 uri: https://example.com
+                requestTemplates:
+                  application/json: "{ statusCode: 200 }"
             integrationResponses:
               - statusCode: "200"
                 responseTemplates:
@@ -28,5 +33,8 @@ spec:
                     </message>
             methodResponses:
               - statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers: true
+                  method.response.header.Access-Control-Allow-Origin: true
             requestParameters:
               method.request.header.X-Some-Header: true

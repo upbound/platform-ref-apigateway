@@ -9,3 +9,7 @@ spec:
     description: This is my API for demonstration purposes
     name: {{ .Values.name }}
     region: {{ .Values.region }}
+    tags:
+{{- range $tagKey, $tagValue := .Values.tags }}
+{{ $tagKey | indent 6 }}: {{ $tagValue }}
+{{- end }}

@@ -1,5 +1,8 @@
 name: upbound-api-gateway
 region: eu-central-1
+tags:
+  change: me
+  and: me
 resources:
   - path: example
   - path: example/{id}
@@ -10,6 +13,8 @@ resources:
           - type: HTTP_PROXY
             integrationHttpMethod: POST
             uri: https://example.com
+            requestTemplates:
+              application/json: "{ statusCode: 200 }"
         integrationResponses:
           - statusCode: "200"
             responseParameters:
@@ -23,5 +28,8 @@ resources:
                 </message>
         methodResponses:
           - statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: true
+              method.response.header.Access-Control-Allow-Origin: true
         requestParameters:
           method.request.header.X-Some-Header: true

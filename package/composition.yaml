@@ -38,6 +38,8 @@ spec:
           toFieldPath: spec.connectionDetails[0].name
         - fromFieldPath: spec.parameters.region
           toFieldPath: spec.forProvider.values.region
+        - fromFieldPath: spec.parameters.tags
+          toFieldPath: spec.forProvider.values.tags
         - fromFieldPath: spec.parameters.resources
           toFieldPath: spec.forProvider.values.resources
         - type: CombineFromComposite
