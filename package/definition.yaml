@@ -27,6 +27,9 @@ spec:
                   region:
                     type: string
                     description: AWS region
+                  tags:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   resources:
                     type: array
                     description: array of resources

@@ -1,5 +1,8 @@
 name: upbound-api-gateway
 region: eu-central-1
+tags:
+  change: me
+  and: me
 resources:
   - path: example
   - path: example/{id}

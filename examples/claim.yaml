@@ -6,6 +6,9 @@ metadata:
 spec:
   parameters:
     region: eu-west-1
+    tags:
+      env: test
+      owner: dev
     resources:
       - path: test
       - path: test2
