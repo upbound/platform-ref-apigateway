@@ -64,7 +64,7 @@ spec:
     uri: {{ .uri }}
     requestTemplates:
 {{- range $requestTemplateKey, $requestTemplate := .requestTemplates }}
-{{ $requestTemplateKey | indent 6 }}: {{ $requestTemplate }}
+{{ $requestTemplateKey | indent 6 }}: {{ quote $requestTemplate }}
 {{- end }}
 {{- end }}
 {{- range $integrationResponseIndex, $integrationResponse := .integrationResponses }}
@@ -87,7 +87,7 @@ spec:
     restApiIdSelector:
       matchLabels:
         upbound.io/apigateway: {{ $.Values.name }}
-    statusCode: {{ .statusCode }}
+    statusCode: {{ quote .statusCode }}
     responseParameters:
 {{- range $responseParameterKey, $responseParameter := .responseParameters }}
 {{ $responseParameterKey | indent 6 }}: {{ $responseParameter }}
@@ -119,7 +119,7 @@ spec:
     restApiIdSelector:
       matchLabels:
         upbound.io/apigateway: {{ $.Values.name }}
-    statusCode: {{ .statusCode }}
+    statusCode: {{ quote .statusCode }}
     responseParameters:
 {{- range $responseParameterKey, $responseParameter := .responseParameters }}
 {{ $responseParameterKey | indent 6 }}: {{ $responseParameter }}

@@ -82,9 +82,9 @@ spec:
                                   properties:
                                     statusCode:
                                       type: string
-                                  responseParameters:
-                                    type: object
-                                    x-kubernetes-preserve-unknown-fields: true
+                                    responseParameters:
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
                               requestParameters:
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
