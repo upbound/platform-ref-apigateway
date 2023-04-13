@@ -27,6 +27,18 @@ spec:
                   region:
                     type: string
                     description: AWS region
+                  domain:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: APIGateway domain name
+                      certificateArn:
+                        type: string
+                        description: ACM Certificate ARN
+                    required:
+                      - name
+                      - certificateArn
                   tags:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
@@ -93,6 +105,7 @@ spec:
                               - authorizationType
                 required:
                   - region
+                  - domain
             required:
               - parameters
           status:

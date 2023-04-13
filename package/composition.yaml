@@ -126,3 +126,21 @@ spec:
           toFieldPath: spec.forProvider.restApiId
           policy:
             fromFieldPath: Required
+    - name: domain
+      base:
+        apiVersion: apigateway.aws.upbound.io/v1beta1
+        kind: DomainName
+        spec:
+          forProvider:
+            endpointConfiguration:
+              - types:
+                - REGIONAL
+      patches:
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.region
+        - fromFieldPath: spec.parameters.tags
+          toFieldPath: spec.forProvider.tags
+        - fromFieldPath: spec.parameters.domain.name
+          toFieldPath: spec.forProvider.domainName
+        - fromFieldPath: spec.parameters.domain.certificateArn
+          toFieldPath: spec.forProvider.regionalCertificateArn
