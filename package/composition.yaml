@@ -28,6 +28,10 @@ spec:
               kind: RestAPI
               fieldPath: status.atProvider.arn
               toConnectionSecretKey: restapi-arn
+            - apiVersion: apigateway.aws.upbound.io/v1beta1
+              kind: RestAPI
+              fieldPath: status.atProvider.id
+              toConnectionSecretKey: restapi-id
           writeConnectionSecretToRef:
             name: apigateway
             namespace: upbound-system
@@ -36,6 +40,8 @@ spec:
           toFieldPath: spec.forProvider.values.name
         - fromFieldPath: metadata.name
           toFieldPath: spec.connectionDetails[0].name
+        - fromFieldPath: metadata.name
+          toFieldPath: spec.connectionDetails[1].name
         - fromFieldPath: spec.parameters.region
           toFieldPath: spec.forProvider.values.region
         - fromFieldPath: spec.parameters.tags
@@ -83,3 +89,22 @@ spec:
               string:
                 type: Convert
                 convert: FromBase64
+        - type: ToCompositeFieldPath
+          fromFieldPath: status.atProvider.manifest.data.restapi-id
+          toFieldPath: status.agw.restapi-id
+          transforms:
+            - type: string
+              string:
+                type: Convert
+                convert: FromBase64
+    - name: deployment
+      base:
+        apiVersion: apigateway.aws.upbound.io/v1beta1
+        kind: Deployment
+      patches:
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.region
+        - fromFieldPath: status.agw.restapi-id
+          toFieldPath: spec.forProvider.restApiId
+          policy:
+            fromFieldPath: Required
