@@ -108,3 +108,21 @@ spec:
           toFieldPath: spec.forProvider.restApiId
           policy:
             fromFieldPath: Required
+    - name: stage
+      base:
+        apiVersion: apigateway.aws.upbound.io/v1beta1
+        kind: Stage
+        spec:
+          forProvider:
+            stageName: prod
+            deploymentIdSelector:
+              matchControllerRef: true
+      patches:
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.region
+        - fromFieldPath: spec.parameters.tags
+          toFieldPath: spec.forProvider.tags
+        - fromFieldPath: status.agw.restapi-id
+          toFieldPath: spec.forProvider.restApiId
+          policy:
+            fromFieldPath: Required
