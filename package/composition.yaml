@@ -144,3 +144,20 @@ spec:
           toFieldPath: spec.forProvider.domainName
         - fromFieldPath: spec.parameters.domain.certificateArn
           toFieldPath: spec.forProvider.regionalCertificateArn
+    - name: base-path-mapping
+      base:
+        apiVersion: apigateway.aws.upbound.io/v1beta1
+        kind: BasePathMapping
+        spec:
+          forProvider:
+            domainNameSelector:
+              matchControllerRef: true
+            stageNameSelector:
+              matchControllerRef: true
+      patches:
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.region
+        - fromFieldPath: status.agw.restapi-id
+          toFieldPath: spec.forProvider.apiId
+          policy:
+            fromFieldPath: Required
