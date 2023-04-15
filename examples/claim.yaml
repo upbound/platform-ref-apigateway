@@ -6,6 +6,9 @@ metadata:
 spec:
   parameters:
     region: eu-west-1
+    domain:
+      name: apigateway.upboundrocks.cloud
+      certificateArn: arn:aws:acm:eu-west-1:609897127049:certificate/9e8709a9-19b4-4f23-9c9a-83b26f951c53
     tags:
       env: test
       owner: dev
